@@ -1,13 +1,27 @@
 const express = require('express');
+const mongoose = require('mongoose');
 require('dotenv').config();
 const app = express();
 const todoHandler = require("./routeHandler/todoHandler");
 
-
 // Define Json
 app.use(express.json());
 
+
+
+// database connection with mongoose
+mongoose
+  .connect("mongodb://localhost/todos", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("connection successful"))
+  .catch((err) => console.log(err));
+
+  // Define Todo Route
 app.use("/todo", todoHandler);
+
+// Define Default Route
 app.get('/', function (req, res) {
   res.status(200).json({
     message: "Application is Running port 3000."
