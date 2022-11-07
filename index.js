@@ -1,11 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv= require('dotenv');
+const checkLogin = require('./middlewares/checkLogin');
 const app = express();
 const todoHandler = require("./routeHandler/todoHandler");
+const UserHandler = require("./routeHandler/userHandler");
 
 // Define Json
 app.use(express.json());
+dotenv.config();
 
 
 
@@ -20,6 +23,7 @@ mongoose
 
   // Define Todo Route
 app.use("/todo", todoHandler);
+app.use("/user", UserHandler);
 
 // Define Default Route
 app.get('/', function (req, res) {
